@@ -1,0 +1,91 @@
+from tkinter import*
+import math
+
+root = Tk()
+root.title("Simple_Calculator")
+
+def button_click(val):
+     exp =entry.get()
+     if val=="C":
+       exp=exp[0: len(exp)-1]
+       entry.delete(0,END)
+       entry.insert(0,exp)
+
+     elif val=="CE":
+       entry.delete(0,END)
+
+     elif val== "+":
+       entry.insert(END,"+")
+       return
+
+     elif val== "-":
+       entry.insert(END,"-")
+       return
+
+     elif val== "*":
+       entry.insert(END,"*")
+       return
+
+     elif val== "/":
+       entry.insert(END,"/")
+       return
+
+     elif val== "%":
+       entry.insert(END,"%")
+       return
+
+     elif val== "=":
+         ans= eval(exp)
+         entry.delete(0,END)
+         entry.insert(0,ans)
+
+     elif val=='|x|':
+         if int(exp)<0:
+          ans=int(exp)*(-1)
+         else:
+             ans=int(exp)
+         entry.delete(0,END)
+         entry.insert(0,ans)
+     else:
+         entry.insert(END,val)
+         return
+
+     
+root.config(bg="white")
+root.geometry('372x395+100+100')
+root.resizable(width=False,height=False)
+entry= Entry(root,width=55,borderwidth=25,bg='#003366',fg="white",justify="right")
+entry.grid(row=0,column=0,columnspan=10,pady=5)
+
+
+
+button_list=["C" ,"CE","|x|","/",
+             "7" ,"8" ,"9" ,"+" ,
+             "4" ,"5" ,"6" ,"-" ,
+             "1" ,"2" ,"3" ,"*" ,
+             "%","0", "."  ,"=" ]
+
+
+row_value=1
+col_value=0
+
+for i in button_list:
+    if(i in "0123456789"):
+          button= Button(root,text =i,width=7,font=("ariel",12,"bold"),bg='#2851F6',fg='white',bd=8,height=2,command=lambda button=i:button_click(button))
+    elif(i=="CE" or i=="C"):
+               button= Button(root,text =i,width=7,font=("ariel",12,"bold"),bg='#E10F00',fg='white',bd=8,height=2,command=lambda button=i:button_click(button))
+    elif(i=="="):
+               button= Button(root,text =i,width=7,font=("ariel",12,"bold"),bg='#4BFD00',fg='white',bd=8,height=2,command=lambda button=i:button_click(button))
+    elif(i in "+-/*%"):
+               button= Button(root,text =i,width=7,font=("ariel",12,"bold"),bg='#CA2D96',fg='white',bd=8,height=2,command=lambda button=i:button_click(button))
+    elif(i=="|x|"):
+               button= Button(root,text =i,width=7,font=("ariel",12,"bold"),bg='#288BA8',fg='white',bd=8,height=2,command=lambda button=i:button_click(button))
+    else:
+       button= Button(root,text =i,width=7,font=("ariel",12,"bold"),bg='#BD00FF',fg='black',bd=8,height=2,command=lambda button=i:button_click(button))
+
+    button.grid(row=row_value,column=col_value)
+    col_value+=1
+    if col_value>3:
+        row_value+=1
+        col_value=0
+root.mainloop()
